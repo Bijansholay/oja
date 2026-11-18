@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="yBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FAF7F2"/>
+      <stop offset="100%" stop-color="#EBE3D3"/>
+    </radialGradient>
+    <linearGradient id="yamBark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#735338"/>
+      <stop offset="50%" stop-color="#543C28"/>
+      <stop offset="100%" stop-color="#362518"/>
+    </linearGradient>
+    <radialGradient id="yamFlesh" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#FAF7EB"/>
+      <stop offset="90%" stop-color="#F2ECD8"/>
+      <stop offset="100%" stop-color="#D9CCA9"/>
+    </radialGradient>
+    <filter id="yShadow">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#261A10" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#yBg)"/>
+
+  <!-- Ground Shadows -->
+  <ellipse cx="190" cy="225" rx="140" ry="24" fill="#261A10" opacity="0.16"/>
+  <ellipse cx="280" cy="235" rx="55" ry="18" fill="#261A10" opacity="0.18"/>
+
+  <!-- Full Yam Tuber (Lying Horizontally) -->
+  <g filter="url(#yShadow)">
+    <path d="M65 175 Q60 160 85 155 L260 148 Q285 152 280 180 Q275 205 250 208 L85 200 Q60 195 65 175 Z" fill="url(#yamBark)"/>
+    <!-- Organic bark rings & roots -->
+    <path d="M110 156 Q115 180 110 200" stroke="#3A281A" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M160 152 Q168 180 160 204" stroke="#3A281A" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M210 150 Q218 180 210 206" stroke="#3A281A" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <!-- Hair roots -->
+    <path d="M130 202 Q135 215 142 222" stroke="#4A3422" stroke-width="1.5" fill="none"/>
+    <path d="M185 204 Q190 220 185 228" stroke="#4A3422" stroke-width="1.5" fill="none"/>
+    <path d="M235 205 Q245 218 252 225" stroke="#4A3422" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- Cut Half Tuber Standing Proud in Foreground (Showing pure starchy white core) -->
+  <g filter="url(#yShadow)">
+    <!-- Outer bark tube -->
+    <path d="M250 160 L315 150 L320 225 L255 235 Z" fill="url(#yamBark)"/>
+    <!-- Cut circular face -->
+    <ellipse cx="255" cy="195" rx="35" ry="42" fill="#422E1F"/>
+    <ellipse cx="253" cy="195" rx="31" ry="38" fill="url(#yamFlesh)"/>
+    <!-- Moist starch texture ring -->
+    <ellipse cx="253" cy="195" rx="24" ry="29" fill="none" stroke="#EDE2C2" stroke-width="2" stroke-dasharray="4 3" opacity="0.7"/>
+    <circle cx="253" cy="195" r="3" fill="#D9C9A1" opacity="0.5"/>
+  </g>
+
+  <!-- Farm Badge -->
+  <g transform="translate(315, 25) scale(0.85)">
+    <circle cx="35" cy="35" r="30" fill="#543C28" opacity="0.9"/>
+    <circle cx="35" cy="35" r="27" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="35" y="32" font-family="Georgia, serif" font-size="9" font-weight="bold" fill="#FAF7F0" text-anchor="middle">NEW</text>
+    <text x="35" y="44" font-family="sans-serif" font-size="8" font-weight="bold" fill="#F8F6F0" text-anchor="middle">YAM</text>
+  </g>
+</svg>

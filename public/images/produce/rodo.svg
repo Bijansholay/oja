@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="rBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#F9F6F0"/>
+      <stop offset="100%" stop-color="#EBE3D3"/>
+    </radialGradient>
+    <radialGradient id="rodo1" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FF5722"/>
+      <stop offset="45%" stop-color="#E63900"/>
+      <stop offset="85%" stop-color="#B32400"/>
+      <stop offset="100%" stop-color="#731700"/>
+    </radialGradient>
+    <radialGradient id="rodo2" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FF9800"/>
+      <stop offset="45%" stop-color="#F57C00"/>
+      <stop offset="85%" stop-color="#E65100"/>
+      <stop offset="100%" stop-color="#BF360C"/>
+    </radialGradient>
+    <radialGradient id="rodo3" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#E53935"/>
+      <stop offset="50%" stop-color="#C62828"/>
+      <stop offset="85%" stop-color="#8E0000"/>
+      <stop offset="100%" stop-color="#550000"/>
+    </radialGradient>
+    <filter id="rShadow">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#2D2118" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#rBg)"/>
+
+  <!-- Ground Shadows -->
+  <ellipse cx="140" cy="225" rx="65" ry="18" fill="#2D2118" opacity="0.12"/>
+  <ellipse cx="255" cy="230" rx="75" ry="20" fill="#2D2118" opacity="0.14"/>
+  <ellipse cx="200" cy="220" rx="65" ry="18" fill="#2D2118" opacity="0.15"/>
+
+  <!-- Left Scotch Bonnet (Orange) -->
+  <g filter="url(#rShadow)">
+    <!-- Curled stem -->
+    <path d="M145 105 C142 85 152 75 162 65 C164 78 155 88 152 105 Z" fill="#2E6930"/>
+    <!-- Crinkled pepper body -->
+    <path d="M148 105 C185 108 190 145 180 185 C172 215 145 220 135 210 C125 220 100 210 95 180 C90 145 110 108 148 105 Z" fill="url(#rodo2)"/>
+    <!-- Creases & folds -->
+    <path d="M125 125 C132 155 130 185 135 210" stroke="#E65100" stroke-width="4" stroke-linecap="round" opacity="0.4" fill="none"/>
+    <ellipse cx="128" cy="135" rx="14" ry="24" fill="#FFFFFF" opacity="0.3"/>
+  </g>
+
+  <!-- Right Scotch Bonnet (Fiery Red) -->
+  <g filter="url(#rShadow)">
+    <path d="M260 110 C264 88 255 76 242 66 C248 80 252 92 254 110 Z" fill="#265928"/>
+    <path d="M255 110 C295 112 305 150 295 190 C285 225 255 228 245 218 C232 228 205 218 200 185 C195 150 215 112 255 110 Z" fill="url(#rodo1)"/>
+    <path d="M235 130 C242 160 240 190 245 218" stroke="#B32400" stroke-width="5" stroke-linecap="round" opacity="0.45" fill="none"/>
+    <ellipse cx="236" cy="140" rx="16" ry="28" fill="#FFFFFF" opacity="0.32"/>
+  </g>
+
+  <!-- Center Small Rodo -->
+  <g filter="url(#rShadow)">
+    <path d="M200 135 C198 120 205 110 212 102 C208 114 204 122 203 135 Z" fill="#204A22"/>
+    <path d="M202 135 C230 138 238 165 230 195 C222 220 202 222 195 215 C186 222 165 215 162 190 C158 165 174 138 202 135 Z" fill="url(#rodo3)"/>
+    <ellipse cx="188" cy="155" rx="10" ry="18" fill="#FFFFFF" opacity="0.35"/>
+  </g>
+
+  <!-- Heat Tag -->
+  <g transform="translate(320, 25) scale(0.85)">
+    <circle cx="35" cy="35" r="30" fill="#B32400" opacity="0.9"/>
+    <circle cx="35" cy="35" r="27" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="35" y="32" font-family="Georgia, serif" font-size="9" font-weight="bold" fill="#FAF7F0" text-anchor="middle">RODO</text>
+    <text x="35" y="44" font-family="sans-serif" font-size="8" font-weight="bold" fill="#FFC107" text-anchor="middle">HOT</text>
+  </g>
+</svg>

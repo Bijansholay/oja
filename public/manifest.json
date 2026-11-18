@@ -1,0 +1,21 @@
+{
+  "name": "Ọjà — Hyperlocal Farm Produce",
+  "short_name": "Ọjà",
+  "description": "Hyperlocal farm produce directly from growers nearby",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF9F5",
+  "theme_color": "#1B382B",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="bBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FAF6EF"/>
+      <stop offset="100%" stop-color="#EBE2D0"/>
+    </radialGradient>
+    <radialGradient id="beanGrad" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#D99B52"/>
+      <stop offset="50%" stop-color="#B87333"/>
+      <stop offset="85%" stop-color="#80471C"/>
+      <stop offset="100%" stop-color="#542B0D"/>
+    </radialGradient>
+    <filter id="bShadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#361D0C" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#bBg)"/>
+
+  <!-- Rustic Calabash / Bowl Mound -->
+  <ellipse cx="200" cy="225" rx="145" ry="35" fill="#3D200E" opacity="0.18"/>
+  <ellipse cx="200" cy="195" rx="135" ry="50" fill="#9C6233"/>
+  <ellipse cx="200" cy="188" rx="130" ry="46" fill="#80471C"/>
+
+  <!-- Mound of Honey Beans -->
+  <path d="M80 185 Q200 110 320 185 Q200 230 80 185 Z" fill="#6B3B15"/>
+
+  <!-- Individual Detailed Beans in Mound -->
+  <g filter="url(#bShadow)">
+    <!-- Central Bean 1 -->
+    <path d="M190 145 C175 140 165 155 170 170 C175 185 200 185 210 172 C220 160 205 150 190 145 Z" fill="url(#beanGrad)"/>
+    <ellipse cx="188" cy="158" rx="3.5" ry="1.5" fill="#FAF6EF"/> <!-- Eye / Hilum -->
+
+    <!-- Bean 2 -->
+    <path d="M140 160 C125 155 115 170 120 182 C125 195 148 195 156 182 C164 170 152 165 140 160 Z" fill="url(#beanGrad)"/>
+    <ellipse cx="138" cy="172" rx="3" ry="1.5" fill="#FAF6EF"/>
+
+    <!-- Bean 3 -->
+    <path d="M235 152 C220 148 212 162 216 174 C220 186 242 188 250 176 C258 164 248 156 235 152 Z" fill="url(#beanGrad)"/>
+    <ellipse cx="233" cy="164" rx="3" ry="1.5" fill="#FAF6EF"/>
+
+    <!-- Bean 4 (Foreground) -->
+    <path d="M175 180 C160 176 150 190 155 204 C160 216 185 216 195 202 C204 190 190 184 175 180 Z" fill="url(#beanGrad)"/>
+    <ellipse cx="174" cy="194" rx="3.5" ry="1.8" fill="#FAF6EF"/>
+
+    <!-- Bean 5 (Foreground right) -->
+    <path d="M215 182 C200 178 192 192 198 205 C204 218 226 218 235 205 C244 192 230 186 215 182 Z" fill="url(#beanGrad)"/>
+    <ellipse cx="214" cy="195" rx="3" ry="1.5" fill="#FAF6EF"/>
+
+    <!-- Bean 6 (Left flank) -->
+    <path d="M110 180 C98 176 90 188 95 198 C100 208 120 208 126 198 C132 188 122 184 110 180 Z" fill="url(#beanGrad)"/>
+    <ellipse cx="108" cy="190" rx="2.5" ry="1.2" fill="#FAF6EF"/>
+
+    <!-- Bean 7 (Right flank) -->
+    <path d="M270 175 C258 172 250 184 254 194 C258 204 278 204 284 194 C290 184 280 178 270 175 Z" fill="url(#beanGrad)"/>
+    <ellipse cx="268" cy="186" rx="2.5" ry="1.2" fill="#FAF6EF"/>
+  </g>
+
+  <!-- Sweet Honey Drops Accenting Organic Quality -->
+  <g transform="translate(315, 25) scale(0.85)">
+    <circle cx="35" cy="35" r="30" fill="#B87333" opacity="0.9"/>
+    <circle cx="35" cy="35" r="27" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="35" y="32" font-family="Georgia, serif" font-size="8" font-weight="bold" fill="#FAF7F0" text-anchor="middle">OLOYIN</text>
+    <text x="35" y="44" font-family="sans-serif" font-size="8" font-weight="bold" fill="#FCE4B8" text-anchor="middle">HONEY</text>
+  </g>
+</svg>

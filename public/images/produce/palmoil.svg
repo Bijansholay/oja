@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="poBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FBF7F0"/>
+      <stop offset="100%" stop-color="#EDE2D0"/>
+    </radialGradient>
+    <linearGradient id="oilRuby" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F24E24"/>
+      <stop offset="40%" stop-color="#C92A10"/>
+      <stop offset="80%" stop-color="#8A1303"/>
+      <stop offset="100%" stop-color="#540800"/>
+    </linearGradient>
+    <linearGradient id="glassReflection" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.45"/>
+      <stop offset="25%" stop-color="#FFFFFF" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="poShadow">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#381005" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#poBg)"/>
+
+  <!-- Ground Shadows -->
+  <ellipse cx="200" cy="245" rx="90" ry="22" fill="#381005" opacity="0.18"/>
+
+  <!-- Traditional Glass Decanter/Bottle of Palm Oil -->
+  <g filter="url(#poShadow)">
+    <!-- Bottle Stopper / Cap -->
+    <rect x="186" y="55" width="28" height="15" rx="3" fill="#D4A059"/>
+    <!-- Bottle Neck -->
+    <path d="M190 70 L210 70 L214 110 L186 110 Z" fill="#E8D5BC" opacity="0.5"/>
+    <path d="M192 85 L208 85 L212 110 L188 110 Z" fill="url(#oilRuby)"/>
+
+    <!-- Bottle Body Filled with Deep Red Oil -->
+    <path d="M186 110 Q140 135 140 185 Q140 238 200 240 Q260 238 260 185 Q260 135 214 110 Z" fill="url(#oilRuby)"/>
+
+    <!-- Glass Contour Highlights -->
+    <path d="M186 110 Q140 135 140 185 Q140 238 200 240 Q260 238 260 185 Q260 135 214 110 Z" fill="url(#glassReflection)"/>
+    <ellipse cx="170" cy="180" rx="16" ry="38" fill="#FFFFFF" opacity="0.25"/>
+
+    <!-- Rich Viscous Droplet on Side -->
+    <path d="M165 210 Q168 225 162 230 Q156 225 165 210" fill="#FF6B4A"/>
+  </g>
+
+  <!-- Palm fruit nuts scattered near base -->
+  <ellipse cx="120" cy="240" rx="14" ry="10" fill="#B83210"/>
+  <ellipse cx="118" cy="238" rx="8" ry="4" fill="#FF8A65" opacity="0.6"/>
+  <ellipse cx="275" cy="242" rx="16" ry="11" fill="#8A1E08"/>
+  <ellipse cx="272" cy="240" rx="9" ry="5" fill="#FF8A65" opacity="0.6"/>
+
+  <!-- Farm Badge -->
+  <g transform="translate(315, 25) scale(0.85)">
+    <circle cx="35" cy="35" r="30" fill="#8A1303" opacity="0.9"/>
+    <circle cx="35" cy="35" r="27" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="35" y="32" font-family="Georgia, serif" font-size="8" font-weight="bold" fill="#FAF7F0" text-anchor="middle">PURE</text>
+    <text x="35" y="44" font-family="sans-serif" font-size="8" font-weight="bold" fill="#FFA285" text-anchor="middle">NSUKKA</text>
+  </g>
+</svg>

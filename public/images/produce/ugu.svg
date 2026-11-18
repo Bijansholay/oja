@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="uBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#F9F7F2"/>
+      <stop offset="100%" stop-color="#ECE6D8"/>
+    </radialGradient>
+    <linearGradient id="leafDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D6A35"/>
+      <stop offset="60%" stop-color="#1B4D24"/>
+      <stop offset="100%" stop-color="#0E2D14"/>
+    </linearGradient>
+    <linearGradient id="leafMid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#458A4E"/>
+      <stop offset="60%" stop-color="#286932"/>
+      <stop offset="100%" stop-color="#17441F"/>
+    </linearGradient>
+    <linearGradient id="leafLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5CA866"/>
+      <stop offset="60%" stop-color="#367F42"/>
+      <stop offset="100%" stop-color="#1E5227"/>
+    </linearGradient>
+    <filter id="uShadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1A2E1C" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#uBg)"/>
+
+  <!-- Shadow below bundle -->
+  <ellipse cx="200" cy="240" rx="130" ry="22" fill="#1C2E1F" opacity="0.14"/>
+
+  <!-- Background Leaves -->
+  <g filter="url(#uShadow)" opacity="0.85">
+    <!-- Leaf Left Rear -->
+    <path d="M120 220 Q80 160 110 90 Q170 140 180 210 Z" fill="url(#leafDark)"/>
+    <!-- Leaf Right Rear -->
+    <path d="M280 220 Q320 160 290 85 Q230 140 220 210 Z" fill="url(#leafDark)"/>
+  </g>
+
+  <!-- Midground Foliage Bundle -->
+  <g filter="url(#uShadow)">
+    <!-- Central Leaf 1 -->
+    <path d="M200 230 Q140 150 185 60 Q240 130 205 230 Z" fill="url(#leafMid)"/>
+    <!-- Central Leaf Vein -->
+    <path d="M198 220 Q170 150 185 65" stroke="#7AC283" stroke-width="2.5" fill="none" opacity="0.7"/>
+    <path d="M185 150 Q160 130 150 120" stroke="#7AC283" stroke-width="1.5" fill="none" opacity="0.6"/>
+    <path d="M190 120 Q168 105 160 95" stroke="#7AC283" stroke-width="1.5" fill="none" opacity="0.6"/>
+    <path d="M192 145 Q212 135 225 125" stroke="#7AC283" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+    <!-- Left Foreground Leaf -->
+    <path d="M170 235 Q100 180 125 110 Q195 160 175 235 Z" fill="url(#leafLight)"/>
+    <path d="M170 225 Q130 170 127 115" stroke="#8ED696" stroke-width="2.5" fill="none" opacity="0.75"/>
+    <path d="M145 170 Q120 155 112 145" stroke="#8ED696" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+    <!-- Right Foreground Leaf -->
+    <path d="M225 235 Q295 175 270 105 Q205 160 220 235 Z" fill="url(#leafMid)"/>
+    <path d="M223 225 Q262 170 268 110" stroke="#7AC283" stroke-width="2.5" fill="none" opacity="0.7"/>
+  </g>
+
+  <!-- Raffia tie binding the fresh cut bundle -->
+  <path d="M150 220 Q200 228 250 220 Q252 232 248 240 Q200 248 152 240 Z" fill="#C29D5D" stroke="#9E7836" stroke-width="1.5"/>
+  <path d="M165 240 Q170 265 160 280" stroke="#C29D5D" stroke-width="3" fill="none"/>
+  <path d="M172 240 Q180 260 185 275" stroke="#B08B4B" stroke-width="2.5" fill="none"/>
+
+  <!-- Cut Stem Ends Visible at Base -->
+  <ellipse cx="185" cy="245" rx="6" ry="4" fill="#6EA575"/>
+  <ellipse cx="198" cy="246" rx="5" ry="3.5" fill="#5F9466"/>
+  <ellipse cx="212" cy="244" rx="6" ry="4" fill="#6EA575"/>
+
+  <!-- Farm Badge -->
+  <g transform="translate(315, 25) scale(0.85)">
+    <circle cx="35" cy="35" r="30" fill="#1B4D24" opacity="0.9"/>
+    <circle cx="35" cy="35" r="27" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="35" y="32" font-family="Georgia, serif" font-size="9" font-weight="bold" fill="#FAF7F0" text-anchor="middle">UGU</text>
+    <text x="35" y="44" font-family="sans-serif" font-size="8" font-weight="bold" fill="#7AC283" text-anchor="middle">ORGANIC</text>
+  </g>
+</svg>

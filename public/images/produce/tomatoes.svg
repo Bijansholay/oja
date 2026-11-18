@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="tBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#F9F6F0"/>
+      <stop offset="100%" stop-color="#EDE7DA"/>
+    </radialGradient>
+    <radialGradient id="t1" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#F25441"/>
+      <stop offset="45%" stop-color="#D92E1E"/>
+      <stop offset="85%" stop-color="#9E1B0E"/>
+      <stop offset="100%" stop-color="#6B1006"/>
+    </radialGradient>
+    <radialGradient id="t2" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FA6B52"/>
+      <stop offset="50%" stop-color="#E03422"/>
+      <stop offset="90%" stop-color="#A61C0F"/>
+      <stop offset="100%" stop-color="#731208"/>
+    </radialGradient>
+    <radialGradient id="tHighlight" cx="30%" cy="25%" r="35%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="tShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#2D2118" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="400" height="300" fill="url(#tBg)"/>
+
+  <!-- Ground Shadows -->
+  <ellipse cx="170" cy="225" rx="100" ry="24" fill="#2D2118" opacity="0.12"/>
+  <ellipse cx="250" cy="220" rx="90" ry="22" fill="#2D2118" opacity="0.14"/>
+  <ellipse cx="205" cy="210" rx="110" ry="28" fill="#2D2118" opacity="0.16"/>
+
+  <!-- Left Tomato -->
+  <g filter="url(#tShadow)">
+    <circle cx="155" cy="170" r="72" fill="url(#t1)"/>
+    <ellipse cx="138" cy="145" rx="38" ry="24" fill="url(#tHighlight)"/>
+    <!-- Stem Leaves -->
+    <path d="M155 106 C155 95 158 92 165 82 C162 92 160 97 155 106 Z" fill="#224D28"/>
+    <path d="M155 106 Q135 102 120 108 Q138 114 155 108" fill="#2F6636"/>
+    <path d="M155 106 Q142 88 132 80 Q148 94 155 106" fill="#295930"/>
+    <path d="M155 106 Q168 85 178 78 Q168 96 155 106" fill="#3A7843"/>
+    <path d="M155 106 Q180 105 192 112 Q174 116 155 108" fill="#2A5C31"/>
+    <circle cx="155" cy="106" r="5" fill="#224D28"/>
+  </g>
+
+  <!-- Right/Front Tomato -->
+  <g filter="url(#tShadow)">
+    <ellipse cx="245" cy="175" rx="76" ry="70" fill="url(#t2)"/>
+    <ellipse cx="228" cy="148" rx="42" ry="26" fill="url(#tHighlight)"/>
+    <!-- Calyx & Stem -->
+    <path d="M245 112 C245 98 250 90 258 78 C252 90 249 100 245 112 Z" fill="#204A26"/>
+    <path d="M245 112 Q220 108 205 114 Q225 120 245 114" fill="#2D6334"/>
+    <path d="M245 112 Q230 92 218 84 Q235 98 245 112" fill="#24542B"/>
+    <path d="M245 112 Q262 90 274 82 Q262 102 245 112" fill="#3B7D46"/>
+    <path d="M245 112 Q275 110 290 120 Q270 122 245 114" fill="#285C30"/>
+    <circle cx="245" cy="112" r="5" fill="#1C4021"/>
+  </g>
+
+  <!-- Farm Quality Seal -->
+  <g transform="translate(315, 25) scale(0.85)">
+    <circle cx="35" cy="35" r="30" fill="#1B382B" opacity="0.9"/>
+    <circle cx="35" cy="35" r="27" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="35" y="32" font-family="Georgia, serif" font-size="9" font-weight="bold" fill="#FAF7F0" text-anchor="middle" letter-spacing="1">FARM</text>
+    <text x="35" y="44" font-family="sans-serif" font-size="8" font-weight="bold" fill="#E8B042" text-anchor="middle">FRESH</text>
+  </g>
+</svg>

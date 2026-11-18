@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="cBg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FBF7F0"/>
+      <stop offset="100%" stop-color="#ECE3D2"/>
+    </radialGradient>
+    <linearGradient id="smokedBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7A4F2A"/>
+      <stop offset="45%" stop-color="#4D2D12"/>
+      <stop offset="85%" stop-color="#2E1805"/>
+      <stop offset="100%" stop-color="#140A00"/>
+    </linearGradient>
+    <filter id="cShadow">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#261506" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#cBg)"/>
+
+  <!-- Smoker Wire Grid Lines in Background -->
+  <g stroke="#CFC5B2" stroke-width="1.5" opacity="0.6">
+    <line x1="40" y1="90" x2="360" y2="90"/>
+    <line x1="40" y1="140" x2="360" y2="140"/>
+    <line x1="40" y1="190" x2="360" y2="190"/>
+    <line x1="40" y1="240" x2="360" y2="240"/>
+    <line x1="90" y1="60" x2="90" y2="260"/>
+    <line x1="160" y1="60" x2="160" y2="260"/>
+    <line x1="230" y1="60" x2="230" y2="260"/>
+    <line x1="300" y1="60" x2="300" y2="260"/>
+  </g>
+
+  <!-- Ground Shadows -->
+  <ellipse cx="200" cy="225" rx="130" ry="24" fill="#241203" opacity="0.2"/>
+
+  <!-- Curled Kiln-Smoked Catfish (Traditional circular bend skewered with stick) -->
+  <g filter="url(#cShadow)">
+    <!-- Wooden Bamboo Skewer holding fish in circle -->
+    <line x1="95" y1="195" x2="295" y2="135" stroke="#C7A571" stroke-width="4.5" stroke-linecap="round"/>
+
+    <!-- Curled Catfish Body -->
+    <path d="M120 185 C80 120 170 70 240 85 C310 100 330 190 260 215 C190 240 140 220 120 185 Z" fill="none" stroke="url(#smokedBody)" stroke-width="48" stroke-linecap="round"/>
+
+    <!-- Fish Broad Head & Whiskers (Barbel) -->
+    <ellipse cx="125" cy="180" rx="26" ry="22" fill="#3D2008"/>
+    <!-- Barbels -->
+    <path d="M110 175 Q85 165 70 175" stroke="#4A280D" stroke-width="2.5" fill="none"/>
+    <path d="M110 185 Q80 190 65 205" stroke="#4A280D" stroke-width="2.5" fill="none"/>
+    <!-- Tail Fin (held by mouth/skewer) -->
+    <path d="M260 215 Q295 240 310 230 Q295 210 270 205 Z" fill="#4D2A0C"/>
+
+    <!-- Kiln Smoked Crisp Highlights (Hardwood sheen) -->
+    <path d="M160 88 Q220 82 260 105" stroke="#B87D43" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.45"/>
+    <circle cx="122" cy="172" r="3" fill="#000"/>
+  </g>
+
+  <!-- Farm Badge -->
+  <g transform="translate(315, 25) scale(0.85)">
+    <circle cx="35" cy="35" r="30" fill="#2E1805" opacity="0.9"/>
+    <circle cx="35" cy="35" r="27" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="35" y="32" font-family="Georgia, serif" font-size="8" font-weight="bold" fill="#FAF7F0" text-anchor="middle">SMOKED</text>
+    <text x="35" y="44" font-family="sans-serif" font-size="8" font-weight="bold" fill="#F7CA88" text-anchor="middle">KILN</text>
+  </g>
+</svg>
