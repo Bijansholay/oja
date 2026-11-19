@@ -9,7 +9,7 @@ import { DEMO_ORDERS } from "@/lib/demo/store";
 import { useAuth } from "@/features/auth/auth-context";
 import { client, databases } from "@/lib/appwrite/client";
 import { DATABASE_ID, COLLECTIONS, APPWRITE_PROJECT_ID } from "@/lib/appwrite/constants";
-import { Query } from "appwrite";
+import { ID, Query } from "appwrite";
 import { APP_CONFIG } from "@/lib/config";
 import { createWhatsAppChatUrl } from "@/lib/notifications/channel";
 import {
@@ -183,9 +183,31 @@ export default function OrderDetailPage() {
       )
     : null;
 
-  const handleSubmitReview = (e: React.FormEvent) => {
+  const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsReviewSubmitted(true);
+    if (!order) return;
+    try {
+      if (!isDemoMode && APPWRITE_PROJECT_ID) {
+        await databases.createDocument(
+          DATABASE_ID,
+          COLLECTIONS.REVIEWS,
+          ID.unique(),
+          {
+            orderId: order.$id,
+            sellerId: order.sellerId,
+            buyerId: order.buyerId,
+            buyerName: order.buyer?.name || "Verified Buyer",
+            rating: reviewRating,
+            comment: reviewComment.trim(),
+            createdAt: new Date().toISOString(),
+          }
+        );
+      }
+      setIsReviewSubmitted(true);
+    } catch (err) {
+      console.error("Failed to submit review:", err);
+      setIsReviewSubmitted(true);
+    }
   };
 
   return (
