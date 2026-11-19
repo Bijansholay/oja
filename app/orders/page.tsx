@@ -51,11 +51,34 @@ export default function MyOrdersPage() {
           COLLECTIONS.ORDERS,
           [Query.equal("buyerId", buyerId), Query.orderDesc("createdAt")]
         );
-        setOrders(res.documents as unknown as Order[]);
+        const orderDocs = res.documents as unknown as Order[];
+        const enriched = await Promise.all(
+          orderDocs.map(async (ord) => {
+            if (ord.sellerId) {
+              try {
+                const sellerDoc = await databases.getDocument(
+                  DATABASE_ID,
+                  COLLECTIONS.PROFILES,
+                  ord.sellerId
+                );
+                return {
+                  ...ord,
+                  seller: {
+                    name: (sellerDoc as any).name || "Local Farmer",
+                    phone: (sellerDoc as any).phone || "",
+                  },
+                };
+              } catch {
+                return ord;
+              }
+            }
+            return ord;
+          })
+        );
+        setOrders(enriched);
       } catch (err) {
-        console.warn("Failed loading orders from Appwrite, using local orders", err);
-        const userOrders = DEMO_ORDERS.filter((o) => o.buyerId === buyerId);
-        setOrders(userOrders);
+        console.error("Failed loading orders from Appwrite:", err);
+        setOrders(isDemoMode ? DEMO_ORDERS.filter((o) => o.buyerId === buyerId) : []);
       } finally {
         setIsLoading(false);
       }

@@ -4,11 +4,13 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
+import { AuthModal } from "@/components/auth/auth-modal";
 import { useCart } from "@/features/cart/cart-context";
 import { useAuth } from "@/features/auth/auth-context";
 import { useI18n } from "@/lib/i18n/context";
 import { PaymentMethod } from "@/lib/types";
 import { APP_CONFIG } from "@/lib/config";
+import { normalizePhoneNumber } from "@/lib/validation/schemas";
 import {
   MapPin,
   Phone,
@@ -21,6 +23,7 @@ import {
   AlertCircle,
   Truck,
   CheckCircle2,
+  LogIn,
 } from "lucide-react";
 
 export default function CheckoutPage() {
@@ -28,6 +31,8 @@ export default function CheckoutPage() {
   const { items, splitOrders, grandTotal, clearCart } = useCart();
   const { user, profile } = useAuth();
   const { t } = useI18n();
+
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Check if Paystack is configured
   const isPaystackConfigured =
@@ -91,9 +96,17 @@ export default function CheckoutPage() {
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+
+    // Require authentication before placing order
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      const normalizedBuyerPhone = normalizePhoneNumber(buyerPhone.trim());
       const payload = {
         items: items.map((i) => ({ listingId: i.listingId, qty: i.qty })),
         paymentMethod,
@@ -101,9 +114,9 @@ export default function CheckoutPage() {
         deliveryLat,
         deliveryLng,
         buyerNote: buyerNote.trim() || undefined,
-        buyerId: user?.$id || undefined,
+        buyerId: user.$id,
         buyerName: buyerName.trim(),
-        buyerPhone: buyerPhone.trim(),
+        buyerPhone: normalizedBuyerPhone,
       };
 
       const res = await fetch("/api/orders/checkout", {
@@ -166,6 +179,30 @@ export default function CheckoutPage() {
             Produce is freshly harvested and delivered directly by each grower to your address.
           </p>
         </div>
+
+        {!user && (
+          <div className="p-4 rounded-xl bg-forest-light/60 border border-forest/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-forest text-parchment flex items-center justify-center flex-shrink-0">
+                <Phone className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-forest">Sign in with Phone for 1-Click Checkout</p>
+                <p className="text-[11px] text-charcoal-muted">
+                  Auto-fill your delivery details and receive live order updates from the grower.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsAuthModalOpen(true)}
+              className="px-4 py-2 rounded-lg bg-forest hover:bg-forest-hover text-parchment font-semibold text-xs transition-colors shadow-subtle flex-shrink-0 flex items-center justify-center gap-1.5"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span>Sign In with Phone</span>
+            </button>
+          </div>
+        )}
 
         {errorMessage && (
           <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 flex items-start gap-2.5">
@@ -427,6 +464,12 @@ export default function CheckoutPage() {
           </div>
         </form>
       </main>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        defaultRole="buyer"
+      />
     </>
   );
 }

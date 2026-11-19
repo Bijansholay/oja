@@ -8,10 +8,20 @@ import { z } from "zod";
  */
 export function normalizePhoneNumber(rawPhone: string): string {
   const cleaned = rawPhone.replace(/[\s\-\(\)]/g, "");
-  if (/^0[789][01]\d{8}$/.test(cleaned)) {
+  // Local Nigerian format: 11 digits starting with 0 (e.g. 080..., 070..., 090..., 091...)
+  if (/^0\d{10}$/.test(cleaned)) {
     return "+234" + cleaned.slice(1);
   }
-  if (/^234[789][01]\d{8}$/.test(cleaned)) {
+  // Nigerian format with country code but missing plus: 2348012345678
+  if (/^234\d{10}$/.test(cleaned)) {
+    return "+" + cleaned;
+  }
+  // Already starting with +
+  if (cleaned.startsWith("+")) {
+    return cleaned;
+  }
+  // Generic international digits without plus (e.g. 14155552671)
+  if (/^[1-9]\d{7,14}$/.test(cleaned)) {
     return "+" + cleaned;
   }
   return cleaned;

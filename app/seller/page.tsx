@@ -8,7 +8,9 @@ import { useI18n } from "@/lib/i18n/context";
 import { Listing, Order, OrderStatus } from "@/lib/types";
 import { getSellerListings, updateProduceListing } from "@/features/listings/listing-actions";
 import { DEMO_ORDERS } from "@/lib/demo/store";
-import { getProduceImageUrl } from "@/lib/appwrite/client";
+import { getProduceImageUrl, databases } from "@/lib/appwrite/client";
+import { DATABASE_ID, COLLECTIONS } from "@/lib/appwrite/constants";
+import { Query } from "appwrite";
 import { Navbar } from "@/components/layout/navbar";
 import { AuthModal } from "@/components/auth/auth-modal";
 import { APP_CONFIG } from "@/lib/config";
@@ -57,10 +59,55 @@ export default function SellerDashboardPage() {
         setListings(myProducts);
 
         // Filter orders strictly for this farmer
-        const myOrders = DEMO_ORDERS.filter(
-          (o) => o.sellerId === effectiveSellerId
-        );
-        setOrders(myOrders);
+        if (isDemoMode) {
+          const myOrders = DEMO_ORDERS.filter(
+            (o) => o.sellerId === effectiveSellerId
+          );
+          setOrders(myOrders);
+        } else {
+          const res = await databases.listDocuments(
+            DATABASE_ID,
+            COLLECTIONS.ORDERS,
+            [Query.equal("sellerId", effectiveSellerId), Query.orderDesc("createdAt")]
+          );
+          const orderDocs = res.documents as unknown as Order[];
+          const enriched = await Promise.all(
+            orderDocs.map(async (ord) => {
+              let buyer = ord.buyer;
+              let items = ord.items;
+
+              // Fetch buyer profile for contact info
+              if (ord.buyerId && !buyer) {
+                try {
+                  const bDoc = await databases.getDocument(
+                    DATABASE_ID,
+                    COLLECTIONS.PROFILES,
+                    ord.buyerId
+                  );
+                  buyer = {
+                    name: (bDoc as any).name || "Produce Buyer",
+                    phone: (bDoc as any).phone || "",
+                  };
+                } catch {}
+              }
+
+              // Fetch order items
+              if (!items || items.length === 0) {
+                try {
+                  const iRes = await databases.listDocuments(
+                    DATABASE_ID,
+                    COLLECTIONS.ORDER_ITEMS,
+                    [Query.equal("orderId", ord.$id)]
+                  );
+                  items = iRes.documents as unknown as any[];
+                } catch {}
+              }
+
+              return { ...ord, buyer, items };
+            })
+          );
+          setOrders(enriched);
+        }
       } catch (err) {
         console.error("Failed to load seller data", err);
       } finally {
@@ -68,13 +115,25 @@ export default function SellerDashboardPage() {
       }
     }
     loadData();
-  }, [effectiveSellerId]);
+  }, [effectiveSellerId, isDemoMode]);
 
   // Order status actions
-  const handleUpdateOrderStatus = (orderId: string, newStatus: OrderStatus) => {
-    setOrders((prev) =>
-      prev.map((o) => (o.$id === orderId ? { ...o, status: newStatus } : o))
-    );
+  const handleUpdateOrderStatus = async (orderId: string, newStatus: OrderStatus) => {
+    try {
+      if (!isDemoMode) {
+        await databases.updateDocument(
+          DATABASE_ID,
+          COLLECTIONS.ORDERS,
+          orderId,
+          { status: newStatus }
+        );
+      }
+      setOrders((prev) =>
+        prev.map((o) => (o.$id === orderId ? { ...o, status: newStatus } : o))
+      );
+    } catch (err) {
+      console.error("Failed to update order status:", err);
+    }
   };
 
   // Toggle listing status (active <-> sold_out)

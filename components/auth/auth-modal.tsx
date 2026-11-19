@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useAuth } from "@/features/auth/auth-context";
 import { useI18n } from "@/lib/i18n/context";
 import { DEMO_PROFILES } from "@/lib/demo/store";
+import { normalizePhoneNumber } from "@/lib/validation/schemas";
 import { X, Smartphone, Mail, ArrowRight, ShieldCheck, UserCheck } from "lucide-react";
 
 interface AuthModalProps {
@@ -28,7 +29,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
 
   const [authMethod, setAuthMethod] = useState<"phone" | "email">("phone");
   const [step, setStep] = useState<"input" | "verify">("input");
-  const [phoneNumber, setPhoneNumber] = useState("+234");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [pendingUserId, setPendingUserId] = useState<string>("");
@@ -44,10 +45,15 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
 
     try {
       if (authMethod === "phone") {
-        if (!phoneNumber || phoneNumber.length < 10) {
-          throw new Error("Please enter a valid phone number with country code (e.g. +2348012345678)");
+        const raw = phoneNumber.trim();
+        if (!raw) {
+          throw new Error("Please enter your mobile phone number");
         }
-        const res = await sendPhoneOtp(phoneNumber.trim());
+        const normalized = normalizePhoneNumber(raw);
+        if (!normalized || normalized.length < 10) {
+          throw new Error("Please enter a valid phone number (e.g. 08012345678 or +2348012345678)");
+        }
+        const res = await sendPhoneOtp(normalized);
         setPendingUserId(res.userId);
         setStep("verify");
       } else {
@@ -76,9 +82,9 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
       }
 
       if (authMethod === "phone") {
-        await verifyPhoneOtp(pendingUserId, otpCode.trim());
+        await verifyPhoneOtp(pendingUserId, otpCode.trim(), defaultRole);
       } else {
-        await verifyEmailOtp(pendingUserId, otpCode.trim());
+        await verifyEmailOtp(pendingUserId, otpCode.trim(), defaultRole);
       }
       onClose();
     } catch (err: any) {
@@ -177,13 +183,13 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
                         type="tel"
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="+2348012345678"
+                        placeholder="08012345678 or +234..."
                         required
                         className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
                       />
                     </div>
                     <span className="text-[11px] text-charcoal-muted mt-1 block">
-                      Include country code (e.g. +234 for Nigeria)
+                      Local mobile (080...) or international (+234...)
                     </span>
                   </div>
                 ) : (

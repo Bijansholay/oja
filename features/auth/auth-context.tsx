@@ -1,12 +1,14 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useRef } from "react";
+import { ID, Permission, Role } from "appwrite";
 import { Profile, UserRole } from "@/lib/types";
 import { account, databases } from "@/lib/appwrite/client";
 import { DATABASE_ID, COLLECTIONS, APPWRITE_PROJECT_ID } from "@/lib/appwrite/constants";
 import { DEMO_PROFILES } from "@/lib/demo/store";
 import { encodeGeohash } from "@/lib/geo/geohash";
 import { APP_CONFIG } from "@/lib/config";
+import { normalizePhoneNumber } from "@/lib/validation/schemas";
 
 interface AuthUser {
   $id: string;
@@ -20,9 +22,9 @@ interface AuthContextType {
   profile: Profile | null;
   isLoading: boolean;
   sendPhoneOtp: (phone: string) => Promise<{ userId: string }>;
-  verifyPhoneOtp: (userId: string, secret: string) => Promise<void>;
+  verifyPhoneOtp: (userId: string, secret: string, role?: UserRole) => Promise<void>;
   sendEmailOtp: (email: string) => Promise<{ userId: string }>;
-  verifyEmailOtp: (userId: string, secret: string) => Promise<void>;
+  verifyEmailOtp: (userId: string, secret: string, role?: UserRole) => Promise<void>;
   updateProfile: (data: Partial<Profile>) => Promise<Profile>;
   logout: () => Promise<void>;
   isDemoMode: boolean;
@@ -101,24 +103,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [isDemo]);
 
   const sendPhoneOtp = async (phone: string) => {
-    lastPhoneRef.current = phone;
+    const normalized = normalizePhoneNumber(phone.trim());
+    lastPhoneRef.current = normalized;
     if (isDemo) {
       // In demo mode, simulated instant OTP
-      const demoUserId = "buyer_" + phone.replace(/[^0-9]/g, "").slice(-6);
+      const demoUserId = "buyer_" + normalized.replace(/[^0-9]/g, "").slice(-6);
       return { userId: demoUserId };
     }
-    const token = await account.createPhoneToken("unique()", phone);
+    const token = await account.createPhoneToken(ID.unique(), normalized);
     return { userId: token.userId };
   };
 
-  const verifyPhoneOtp = async (userId: string, secret: string) => {
+  const verifyPhoneOtp = async (userId: string, secret: string, role?: UserRole) => {
+    const chosenRole = role || "buyer";
     if (isDemo) {
       const demoProfile: Profile = {
         $id: userId,
         userId,
-        name: "Produce Member",
+        name: chosenRole === "seller" ? "Fresh Producer" : "Produce Member",
         phone: lastPhoneRef.current || "+234" + userId.replace(/[^0-9]/g, ""),
-        role: "both",
+        role: chosenRole,
         lat: APP_CONFIG.geo.defaultLat,
         lng: APP_CONFIG.geo.defaultLng,
         geohash: encodeGeohash(
@@ -131,6 +135,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       setUser({ $id: userId, phone: demoProfile.phone });
       setProfile(demoProfile);
+      setActiveRole(chosenRole);
       localStorage.setItem(DEMO_MODE_STORAGE_KEY, userId);
       return;
     }
@@ -145,15 +150,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         COLLECTIONS.PROFILES,
         currentAccount.$id
       );
-      setProfile(doc as unknown as Profile);
-      setActiveRole((doc as unknown as Profile).role === "seller" ? "seller" : "buyer");
+      const existing = doc as unknown as Profile;
+      // Upgrade role to seller if signing in from seller portal
+      if (chosenRole === "seller" && existing.role === "buyer") {
+        const updated = await databases.updateDocument(
+          DATABASE_ID,
+          COLLECTIONS.PROFILES,
+          currentAccount.$id,
+          { role: "seller" }
+        );
+        setProfile(updated as unknown as Profile);
+        setActiveRole("seller");
+      } else {
+        setProfile(existing);
+        setActiveRole(existing.role === "seller" ? "seller" : "buyer");
+      }
     } catch {
-      // Create empty profile draft
+      // Create empty profile draft with document permissions
       const newProfile: Partial<Profile> = {
         userId: currentAccount.$id,
-        phone: currentAccount.phone || "",
-        name: currentAccount.name || "Produce Buyer",
-        role: "buyer",
+        phone: currentAccount.phone || lastPhoneRef.current || "",
+        name: currentAccount.name || (chosenRole === "seller" ? "Fresh Producer" : "Produce Buyer"),
+        role: chosenRole,
         lat: APP_CONFIG.geo.defaultLat,
         lng: APP_CONFIG.geo.defaultLng,
         geohash: encodeGeohash(
@@ -168,9 +186,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         DATABASE_ID,
         COLLECTIONS.PROFILES,
         currentAccount.$id,
-        newProfile
+        newProfile,
+        [
+          Permission.read(Role.any()),
+          Permission.update(Role.user(currentAccount.$id)),
+          Permission.delete(Role.user(currentAccount.$id)),
+        ]
       );
       setProfile(created as unknown as Profile);
+      setActiveRole(chosenRole);
     }
   };
 
@@ -178,18 +202,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (isDemo) {
       return { userId: "user_" + email.split("@")[0] };
     }
-    const token = await account.createEmailToken("unique()", email);
+    const token = await account.createEmailToken(ID.unique(), email.trim());
     return { userId: token.userId };
   };
 
-  const verifyEmailOtp = async (userId: string, secret: string) => {
+  const verifyEmailOtp = async (userId: string, secret: string, role?: UserRole) => {
+    const chosenRole = role || "buyer";
     if (isDemo) {
       const demoProfile: Profile = {
         $id: userId,
         userId,
-        name: "Market Buyer",
+        name: chosenRole === "seller" ? "Fresh Producer" : "Market Buyer",
         phone: "",
-        role: "buyer",
+        role: chosenRole,
         lat: APP_CONFIG.geo.defaultLat,
         lng: APP_CONFIG.geo.defaultLng,
         geohash: encodeGeohash(
@@ -202,12 +227,64 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       setUser({ $id: demoProfile.userId, name: demoProfile.name, email: secret });
       setProfile(demoProfile);
+      setActiveRole(chosenRole);
       localStorage.setItem(DEMO_MODE_STORAGE_KEY, userId);
       return;
     }
     await account.createSession(userId, secret);
     const current = await account.get();
     setUser(current);
+
+    try {
+      const doc = await databases.getDocument(
+        DATABASE_ID,
+        COLLECTIONS.PROFILES,
+        current.$id
+      );
+      const existing = doc as unknown as Profile;
+      if (chosenRole === "seller" && existing.role === "buyer") {
+        const updated = await databases.updateDocument(
+          DATABASE_ID,
+          COLLECTIONS.PROFILES,
+          current.$id,
+          { role: "seller" }
+        );
+        setProfile(updated as unknown as Profile);
+        setActiveRole("seller");
+      } else {
+        setProfile(existing);
+        setActiveRole(existing.role === "seller" ? "seller" : "buyer");
+      }
+    } catch {
+      const newProfile: Partial<Profile> = {
+        userId: current.$id,
+        phone: current.phone || "",
+        name: current.name || (chosenRole === "seller" ? "Fresh Producer" : "Produce Member"),
+        role: chosenRole,
+        lat: APP_CONFIG.geo.defaultLat,
+        lng: APP_CONFIG.geo.defaultLng,
+        geohash: encodeGeohash(
+          APP_CONFIG.geo.defaultLat,
+          APP_CONFIG.geo.defaultLng,
+          APP_CONFIG.geo.geohashPrecision
+        ),
+        areaName: APP_CONFIG.geo.defaultAreaName,
+        createdAt: new Date().toISOString(),
+      };
+      const created = await databases.createDocument(
+        DATABASE_ID,
+        COLLECTIONS.PROFILES,
+        current.$id,
+        newProfile,
+        [
+          Permission.read(Role.any()),
+          Permission.update(Role.user(current.$id)),
+          Permission.delete(Role.user(current.$id)),
+        ]
+      );
+      setProfile(created as unknown as Profile);
+      setActiveRole(chosenRole);
+    }
   };
 
   const updateProfile = async (data: Partial<Profile>): Promise<Profile> => {
@@ -229,20 +306,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     if (isDemo) {
-      const updated = { ...profile, ...payload } as Profile;
+      const updated: Profile = {
+        ...(profile || {
+          $id: user.$id,
+          userId: user.$id,
+          name: user.name || "Member",
+          phone: user.phone || "",
+          role: "buyer",
+          lat: APP_CONFIG.geo.defaultLat,
+          lng: APP_CONFIG.geo.defaultLng,
+          areaName: APP_CONFIG.geo.defaultAreaName,
+          createdAt: new Date().toISOString(),
+        }),
+        ...payload,
+        geohash,
+      };
       setProfile(updated);
       return updated;
     }
 
-    const updatedDoc = await databases.updateDocument(
+    const doc = await databases.updateDocument(
       DATABASE_ID,
       COLLECTIONS.PROFILES,
       user.$id,
       payload
     );
-    const result = updatedDoc as unknown as Profile;
-    setProfile(result);
-    return result;
+    const updated = doc as unknown as Profile;
+    setProfile(updated);
+    return updated;
   };
 
   const logout = async () => {

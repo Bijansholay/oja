@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "setup:appwrite": "node -r dotenv/config scripts/setup-appwrite.mjs",
-    "seed:appwrite": "node -r dotenv/config scripts/seed-appwrite.mjs",
+    "setup:appwrite": "node scripts/setup-appwrite.mjs",
+    "seed:appwrite": "node scripts/seed-appwrite.mjs",
     "test": "vitest run"
   },
   "dependencies": {

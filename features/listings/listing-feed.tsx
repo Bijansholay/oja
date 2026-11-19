@@ -77,8 +77,8 @@ export function ListingFeed({
         );
         setRawListings(res.documents as unknown as Listing[]);
       } catch (err) {
-        console.warn("Failed fetching from Appwrite, falling back to seed produce", err);
-        setRawListings(DEMO_LISTINGS);
+        console.error("Failed fetching listings from Appwrite:", err);
+        setRawListings(isDemo ? DEMO_LISTINGS : []);
       } finally {
         setIsLoading(false);
       }

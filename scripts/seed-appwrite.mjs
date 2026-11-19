@@ -1,6 +1,12 @@
 #!/usr/bin/env node
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+dotenv.config();
+
 import { Client, Databases, ID, Permission, Role } from "node-appwrite";
-import { encodeGeohash } from "../lib/geo/geohash.js";
+import ngeohash from "ngeohash";
+
+const encodeGeohash = (lat, lng, precision = 6) => ngeohash.encode(lat, lng, precision);
 
 const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || "https://cloud.appwrite.io/v1";
 const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;

@@ -4,11 +4,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
-import { Order, OrderStatus } from "@/lib/types";
+import { Order, OrderItem, OrderStatus } from "@/lib/types";
 import { DEMO_ORDERS } from "@/lib/demo/store";
 import { useAuth } from "@/features/auth/auth-context";
 import { client, databases } from "@/lib/appwrite/client";
 import { DATABASE_ID, COLLECTIONS, APPWRITE_PROJECT_ID } from "@/lib/appwrite/constants";
+import { Query } from "appwrite";
 import { APP_CONFIG } from "@/lib/config";
 import { createWhatsAppChatUrl } from "@/lib/notifications/channel";
 import {
@@ -76,10 +77,45 @@ export default function OrderDetailPage() {
         }
 
         const doc = await databases.getDocument(DATABASE_ID, COLLECTIONS.ORDERS, orderId);
-        setOrder(doc as unknown as Order);
+        const orderData = doc as unknown as Order;
+
+        // Fetch order items for this order
+        try {
+          const itemsRes = await databases.listDocuments(
+            DATABASE_ID,
+            COLLECTIONS.ORDER_ITEMS,
+            [Query.equal("orderId", orderId)]
+          );
+          orderData.items = itemsRes.documents as unknown as OrderItem[];
+        } catch (itemErr) {
+          console.warn("Could not load order items:", itemErr);
+        }
+
+        // Fetch seller profile for name and phone
+        if (orderData.sellerId) {
+          try {
+            const sellerDoc = await databases.getDocument(
+              DATABASE_ID,
+              COLLECTIONS.PROFILES,
+              orderData.sellerId
+            );
+            orderData.seller = {
+              name: (sellerDoc as any).name || "Local Farmer",
+              phone: (sellerDoc as any).phone || "",
+            };
+          } catch (sellerErr) {
+            console.warn("Could not load seller profile:", sellerErr);
+          }
+        }
+
+        setOrder(orderData);
       } catch (err) {
-        const found = DEMO_ORDERS.find((o) => o.$id === orderId);
-        setOrder(found || DEMO_ORDERS[0]);
+        if (isDemoMode) {
+          const found = DEMO_ORDERS.find((o) => o.$id === orderId);
+          setOrder(found || DEMO_ORDERS[0]);
+        } else {
+          setOrder(null);
+        }
       } finally {
         setIsLoading(false);
       }
