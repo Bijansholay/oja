@@ -27,7 +27,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
   } = useAuth();
   const { t } = useI18n();
 
-  const [authMethod, setAuthMethod] = useState<"phone" | "email">("phone");
+  const [authMethod, setAuthMethod] = useState<"phone" | "email">("email");
   const [step, setStep] = useState<"input" | "verify">("input");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -151,7 +151,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
         ) : (
           /* Sign In / Sign Up Flow */
           <div>
-            <div className="mb-6">
+            <div className="mb-4">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-forest-light text-forest text-xs font-semibold mb-2">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Hyperlocal Farmers Network</span>
@@ -160,8 +160,45 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
                 Welcome to {t.appName}
               </h2>
               <p className="text-xs text-charcoal-muted mt-1">
-                Enter your phone number for a quick one-time SMS code. No password needed.
+                {authMethod === "email"
+                  ? "Enter your email address to receive an instant 6-digit code. No password needed."
+                  : "Enter your phone or test number for a 6-digit verification code."}
               </p>
+            </div>
+
+            {/* Auth Method Tabs */}
+            <div className="flex border-b border-hairline mb-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMethod("email");
+                  setErrorMessage(null);
+                }}
+                className={`flex-1 pb-2.5 text-xs font-bold text-center border-b-2 transition-all flex items-center justify-center gap-1.5 ${
+                  authMethod === "email"
+                    ? "border-forest text-forest"
+                    : "border-transparent text-charcoal-muted hover:text-charcoal"
+                }`}
+              >
+                <Mail className="w-3.5 h-3.5" />
+                <span>Email Code</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMethod("phone");
+                  setErrorMessage(null);
+                }}
+                className={`flex-1 pb-2.5 text-xs font-bold text-center border-b-2 transition-all flex items-center justify-center gap-1.5 ${
+                  authMethod === "phone"
+                    ? "border-forest text-forest"
+                    : "border-transparent text-charcoal-muted hover:text-charcoal"
+                }`}
+              >
+                <Smartphone className="w-3.5 h-3.5" />
+                <span>Phone Number</span>
+              </button>
             </div>
 
             {errorMessage && (
@@ -172,27 +209,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
 
             {step === "input" ? (
               <form onSubmit={handleSendOtp} className="space-y-4">
-                {authMethod === "phone" ? (
-                  <div>
-                    <label className="block text-xs font-semibold text-charcoal mb-1">
-                      Phone Number (WhatsApp or SMS)
-                    </label>
-                    <div className="relative">
-                      <Smartphone className="w-4 h-4 text-charcoal-muted absolute left-3 top-3.5" />
-                      <input
-                        type="tel"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="08012345678 or +234..."
-                        required
-                        className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
-                      />
-                    </div>
-                    <span className="text-[11px] text-charcoal-muted mt-1 block">
-                      Local mobile (080...) or international (+234...)
-                    </span>
-                  </div>
-                ) : (
+                {authMethod === "email" ? (
                   <div>
                     <label className="block text-xs font-semibold text-charcoal mb-1">
                       Email Address
@@ -203,11 +220,36 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="farmer@farms.ng"
+                        placeholder="you@example.com"
                         required
+                        autoFocus
                         className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
                       />
                     </div>
+                    <span className="text-[11px] text-charcoal-muted mt-1 block">
+                      A 6-digit one-time code will be sent to your inbox.
+                    </span>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-xs font-semibold text-charcoal mb-1">
+                      Phone Number (or Appwrite Test Number)
+                    </label>
+                    <div className="relative">
+                      <Smartphone className="w-4 h-4 text-charcoal-muted absolute left-3 top-3.5" />
+                      <input
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="08012345678 or +234..."
+                        required
+                        autoFocus
+                        className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
+                      />
+                    </div>
+                    <span className="text-[11px] text-charcoal-muted mt-1 block">
+                      Local mobile (080...) or international format (+234...)
+                    </span>
                   </div>
                 )}
 
@@ -220,24 +262,11 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
                     <span>Sending code...</span>
                   ) : (
                     <>
-                      <span>Continue with SMS Code</span>
+                      <span>{authMethod === "email" ? "Send Email Code" : "Continue with SMS Code"}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
-
-                <div className="flex items-center justify-between text-xs pt-1">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAuthMethod(authMethod === "phone" ? "email" : "phone");
-                      setErrorMessage(null);
-                    }}
-                    className="text-forest hover:underline font-medium"
-                  >
-                    {authMethod === "phone" ? "Use email instead" : "Use phone number instead"}
-                  </button>
-                </div>
               </form>
             ) : (
               <form onSubmit={handleVerifyOtp} className="space-y-4">

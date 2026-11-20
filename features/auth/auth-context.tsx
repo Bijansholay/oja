@@ -256,10 +256,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setActiveRole(existing.role === "seller" ? "seller" : "buyer");
       }
     } catch {
+      const derivedName =
+        current.name ||
+        (current.email ? current.email.split("@")[0].replace(/[._]/g, " ") : "") ||
+        (chosenRole === "seller" ? "Fresh Producer" : "Produce Member");
+
       const newProfile: Partial<Profile> = {
         userId: current.$id,
         phone: current.phone || "",
-        name: current.name || (chosenRole === "seller" ? "Fresh Producer" : "Produce Member"),
+        name: derivedName,
         role: chosenRole,
         lat: APP_CONFIG.geo.defaultLat,
         lng: APP_CONFIG.geo.defaultLng,

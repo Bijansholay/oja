@@ -159,7 +159,7 @@ async function setupSchema() {
   ]);
   await ensureStringAttribute("profiles", "userId", 64, true);
   await ensureStringAttribute("profiles", "name", 100, true);
-  await ensureStringAttribute("profiles", "phone", 32, true);
+  await ensureStringAttribute("profiles", "phone", 32, false);
   await ensureStringAttribute("profiles", "role", 16, true);
   await ensureStringAttribute("profiles", "avatarId", 64, false);
   await ensureFloatAttribute("profiles", "lat", true);

@@ -14,6 +14,7 @@ import { normalizePhoneNumber } from "@/lib/validation/schemas";
 import {
   MapPin,
   Phone,
+  Mail,
   ShieldCheck,
   CreditCard,
   Banknote,
@@ -184,10 +185,10 @@ export default function CheckoutPage() {
           <div className="p-4 rounded-xl bg-forest-light/60 border border-forest/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full bg-forest text-parchment flex items-center justify-center flex-shrink-0">
-                <Phone className="w-4 h-4" />
+                <Mail className="w-4 h-4" />
               </div>
               <div>
-                <p className="text-xs font-bold text-forest">Sign in with Phone for 1-Click Checkout</p>
+                <p className="text-xs font-bold text-forest">Sign in for 1-Click Checkout</p>
                 <p className="text-[11px] text-charcoal-muted">
                   Auto-fill your delivery details and receive live order updates from the grower.
                 </p>
@@ -199,7 +200,7 @@ export default function CheckoutPage() {
               className="px-4 py-2 rounded-lg bg-forest hover:bg-forest-hover text-parchment font-semibold text-xs transition-colors shadow-subtle flex-shrink-0 flex items-center justify-center gap-1.5"
             >
               <LogIn className="w-3.5 h-3.5" />
-              <span>Sign In with Phone</span>
+              <span>Sign In</span>
             </button>
           </div>
         )}
