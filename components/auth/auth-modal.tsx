@@ -27,7 +27,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
   } = useAuth();
   const { t } = useI18n();
 
-  const [authMethod, setAuthMethod] = useState<"phone" | "email">("email");
+  const [authMethod, setAuthMethod] = useState<"phone" | "email">("phone");
   const [step, setStep] = useState<"input" | "verify">("input");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -286,6 +286,11 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
                   />
                   <span className="text-[11px] text-charcoal-muted mt-1 block">
                     Sent to {authMethod === "phone" ? phoneNumber : email}
+                    {authMethod === "phone" && (
+                      <span className="text-forest block mt-0.5 font-medium">
+                        (For demo / test numbers: enter 123456)
+                      </span>
+                    )}
                   </span>
                 </div>
 
