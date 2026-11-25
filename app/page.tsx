@@ -34,16 +34,16 @@ export default function HomePage() {
         currentAreaName={userLocation.name.split(",")[0]}
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8 min-w-0">
         {/* Editorial Market Banner */}
-        <section className="relative rounded-2xl bg-forest text-parchment p-6 sm:p-10 overflow-hidden shadow-subtle">
-          <div className="relative z-10 max-w-2xl space-y-3">
+        <section className="relative rounded-2xl bg-forest text-parchment p-5 sm:p-10 overflow-hidden shadow-subtle w-full max-w-full">
+          <div className="relative z-10 max-w-2xl space-y-2.5 sm:space-y-3 w-full">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-hover border border-forest-muted text-[11px] font-semibold text-parchment-soft">
               <Sprout className="w-3.5 h-3.5 text-ochre" />
               <span>Hyperlocal Farm Fresh Produce</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+            <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight break-words">
               Straight from the soil to your kitchen.
             </h1>
 
@@ -52,7 +52,7 @@ export default function HomePage() {
               Delivered directly by the farmers who harvest them.
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center gap-4 text-[11px] text-parchment/70">
+            <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] text-parchment/70">
               <span className="flex items-center gap-1.5">
                 <Truck className="w-3.5 h-3.5 text-ochre" />
                 Farmer Direct Delivery
@@ -69,7 +69,7 @@ export default function HomePage() {
         </section>
 
         {/* Discovery Feed */}
-        <section>
+        <section className="w-full min-w-0 max-w-full">
           <ListingFeed
             userLat={userLocation.lat}
             userLng={userLocation.lng}

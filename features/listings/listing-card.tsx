@@ -46,7 +46,7 @@ export function ListingCard({ listing, showDistance = true }: ListingCardProps) 
   };
 
   return (
-    <div className="group relative rounded-xl border border-hairline bg-white overflow-hidden shadow-subtle hover:shadow-card transition-all flex flex-col justify-between">
+    <div className="group relative rounded-xl border border-hairline bg-white overflow-hidden shadow-subtle hover:shadow-card transition-all flex flex-col justify-between w-full min-w-0 max-w-full">
       <div>
         {/* Produce Photography */}
         <Link href={`/listings/${listing.$id}`} className="block relative w-full aspect-[4/3] bg-parchment-soft overflow-hidden">

@@ -132,7 +132,7 @@ export default function ListingDetailPage() {
     <>
       <Navbar />
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-10 pb-28 sm:pb-10">
+      <main className="w-full min-w-0 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-10 pb-28 sm:pb-10">
         {/* Back Link */}
         <div className="mb-4 sm:mb-6">
           <Link

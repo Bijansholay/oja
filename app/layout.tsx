@@ -38,9 +38,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-parchment text-charcoal flex flex-col pb-16 sm:pb-0">
+      <body className="min-h-screen bg-parchment text-charcoal flex flex-col w-full max-w-full overflow-x-hidden pb-16 sm:pb-0">
         <Providers>
-          <div className="flex-1 flex flex-col">{children}</div>
+          <div className="flex-1 flex flex-col w-full max-w-full min-w-0">{children}</div>
           <CartDrawer />
           <BottomNav />
           <PwaRegister />

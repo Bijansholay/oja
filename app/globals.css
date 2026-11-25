@@ -12,14 +12,20 @@ html {
   color: #232723;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
   background-color: #FBF9F5;
   font-family: var(--font-sans);
   color: #232723;
   overflow-x: hidden;
+  position: relative;
 }
 
 /* Accessible touch targets (minimum 44px x 44px) */

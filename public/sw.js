@@ -1,6 +1,5 @@
-const CACHE_NAME = "oja-pwa-cache-v2";
+const CACHE_NAME = "oja-pwa-cache-v3";
 const STATIC_ASSETS = [
-  "/",
   "/manifest.json",
   "/favicon.ico",
   "/images/produce/placeholder.svg",
@@ -31,7 +30,7 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(event.request.url);
 
-  // Network first with cache fallback for navigation / pages
+  // Network-first for all navigation / HTML pages so UI updates are always instant
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(() => {
@@ -44,9 +43,24 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Stale-while-revalidate for static files and local produce images
+  // Network-first for Next.js static scripts and CSS chunks so style/layout fixes are immediately live
+  if (url.pathname.startsWith("/_next/static/")) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkRes) => {
+          if (networkRes.ok) {
+            const copy = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return networkRes;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Cache-first for local static images and icons
   if (
-    url.pathname.startsWith("/_next/static/") ||
     url.pathname.startsWith("/images/produce/") ||
     url.pathname.endsWith(".png") ||
     url.pathname.endsWith(".webp") ||

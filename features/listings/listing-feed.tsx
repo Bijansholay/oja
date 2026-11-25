@@ -135,15 +135,15 @@ export function ListingFeed({
   const currentDisplayListings = activeTab === "nearby" ? nearbyListings : allListings;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full min-w-0 max-w-full">
       {/* Feed Tabs & Location Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 w-full">
         {/* Tabs: "Nearby Produce" vs "All Harvests" */}
         <div className="flex items-center gap-2 p-1 rounded-xl bg-parchment-soft border border-hairline w-fit">
           <button
             type="button"
             onClick={() => setActiveTab("nearby")}
-            className={`touch-target px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`touch-target px-3.5 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "nearby"
                 ? "bg-forest text-parchment shadow-sm"
                 : "text-charcoal-muted hover:text-charcoal"
@@ -163,7 +163,7 @@ export function ListingFeed({
           <button
             type="button"
             onClick={() => setActiveTab("all")}
-            className={`touch-target px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`touch-target px-3.5 sm:px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "all"
                 ? "bg-forest text-parchment shadow-sm"
                 : "text-charcoal-muted hover:text-charcoal"
@@ -186,17 +186,17 @@ export function ListingFeed({
           <button
             type="button"
             onClick={onOpenAreaPicker}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-hairline bg-white hover:bg-parchment-soft text-charcoal transition-all shadow-subtle"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-hairline bg-white hover:bg-parchment-soft text-charcoal transition-all shadow-subtle max-w-full"
           >
-            <MapPin className="w-3.5 h-3.5 text-forest" />
-            <span className="font-semibold">{userAreaName}</span>
-            <span className="text-charcoal-muted font-normal">• within {radiusKm} km</span>
+            <MapPin className="w-3.5 h-3.5 text-forest flex-shrink-0" />
+            <span className="font-semibold truncate">{userAreaName}</span>
+            <span className="text-charcoal-muted font-normal flex-shrink-0">• within {radiusKm} km</span>
           </button>
         </div>
       </div>
 
       {/* Search Input Bar */}
-      <div className="relative">
+      <div className="relative w-full">
         <Search className="w-5 h-5 text-charcoal-muted absolute left-4 top-3.5" />
         <input
           type="text"
@@ -216,35 +216,37 @@ export function ListingFeed({
       </div>
 
       {/* Category Filter Chips (horizontal edge-to-edge scroll on mobile) */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
-        {CATEGORY_CHIPS.map((cat) => {
-          const isSelected = selectedCategory === cat.id;
-          return (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                isSelected
-                  ? "bg-forest border-forest text-parchment shadow-sm"
-                  : "bg-white border-hairline text-charcoal hover:bg-parchment-soft"
-              }`}
-            >
-              {(t as any)[cat.labelKey] || cat.name}
-            </button>
-          );
-        })}
+      <div className="w-full min-w-0 max-w-full overflow-hidden">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 w-auto">
+          {CATEGORY_CHIPS.map((cat) => {
+            const isSelected = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all flex-shrink-0 ${
+                  isSelected
+                    ? "bg-forest border-forest text-parchment shadow-sm"
+                    : "bg-white border-hairline text-charcoal hover:bg-parchment-soft"
+                }`}
+              >
+                {(t as any)[cat.labelKey] || cat.name}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Main Grid Feed */}
       {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 w-full min-w-0">
           {Array.from({ length: 8 }).map((_, i) => (
             <ListingSkeleton key={i} />
           ))}
         </div>
       ) : currentDisplayListings.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 w-full min-w-0">
           {currentDisplayListings.map((item) => (
             <ListingCard
               key={item.$id}
