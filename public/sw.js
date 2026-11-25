@@ -3,6 +3,7 @@ const STATIC_ASSETS = [
   "/manifest.json",
   "/favicon.ico",
   "/images/produce/placeholder.svg",
+  "/images/hero-farmer.jpg",
 ];
 
 self.addEventListener("install", (event) => {
