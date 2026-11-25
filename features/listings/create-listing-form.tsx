@@ -150,7 +150,7 @@ export function CreateListingForm() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 pt-6 pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:py-8">
       {/* Top Breadcrumb */}
       <div className="flex items-center gap-2 mb-6">
         <Link
@@ -235,7 +235,7 @@ export function CreateListingForm() {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Sweet Roma Tomatoes (Firm & Ripe)"
             required
-            className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
+            className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
           />
         </div>
 
@@ -280,7 +280,7 @@ export function CreateListingForm() {
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="4,500"
                 required
-                className="w-full pl-8 pr-3.5 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal focus:border-forest outline-none transition-all"
+                className="w-full pl-8 pr-3.5 py-2.5 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
               />
             </div>
           </div>
@@ -292,7 +292,7 @@ export function CreateListingForm() {
             <select
               value={unit}
               onChange={(e) => setUnit(e.target.value as ListingUnit)}
-              className="w-full px-3 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal focus:border-forest outline-none transition-all capitalize"
+              className="w-full px-3 py-2.5 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all capitalize"
             >
               <option value="crate">Per Crate</option>
               <option value="bag">Per Bag</option>
@@ -312,7 +312,7 @@ export function CreateListingForm() {
               value={quantity}
               onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
               required
-              className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal focus:border-forest outline-none transition-all"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
             />
           </div>
         </div>
@@ -338,7 +338,7 @@ export function CreateListingForm() {
               onChange={(e) => setLocationName(e.target.value)}
               placeholder="e.g. Epe Farm Settlement, Lagos"
               required
-              className="w-full pl-9 pr-3.5 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal focus:border-forest outline-none transition-all"
+              className="w-full pl-9 pr-3.5 py-2.5 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
             />
           </div>
 
@@ -376,7 +376,7 @@ export function CreateListingForm() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Tell buyers about freshness, harvest date, sweet flavour or farm origin..."
-            className="w-full p-3 rounded-lg border border-hairline bg-white text-sm text-charcoal focus:border-forest outline-none transition-all"
+            className="w-full p-3 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
           />
         </div>
 

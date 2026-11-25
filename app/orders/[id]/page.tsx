@@ -214,7 +214,7 @@ export default function OrderDetailPage() {
     <>
       <Navbar />
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:py-8 space-y-6">
         {/* Back Link */}
         <div className="flex items-center gap-2">
           <Link

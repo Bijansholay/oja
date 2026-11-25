@@ -16,8 +16,8 @@ export function BottomNav() {
   const isOrders = pathname.startsWith("/orders");
   const isSeller = pathname.startsWith("/seller");
 
-  // On produce detail pages, hide BottomNav so it doesn't conflict with product action bar
-  if (pathname.startsWith("/listings/")) {
+  // On produce detail pages and checkout, hide BottomNav to keep focus and prevent UI collisions
+  if (pathname.startsWith("/listings/") || pathname.startsWith("/checkout")) {
     return null;
   }
 

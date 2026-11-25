@@ -162,7 +162,7 @@ export default function CheckoutPage() {
     <>
       <Navbar />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-[calc(3rem+env(safe-area-inset-bottom))] sm:py-8 space-y-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2">
           <Link
