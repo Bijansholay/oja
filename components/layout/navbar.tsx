@@ -49,19 +49,21 @@ export function Navbar({ onOpenAreaPicker, currentAreaName }: NavbarProps) {
                 </div>
               </Link>
 
-              {/* Area location indicator pill */}
-              <button
-                onClick={onOpenAreaPicker}
-                type="button"
-                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-parchment-soft hover:bg-parchment-deep border border-hairline text-xs text-charcoal font-medium transition-all"
-                title="Change discovery location"
-              >
-                <MapPin className="w-3.5 h-3.5 text-forest" />
-                <span className="max-w-[140px] truncate">
-                  {currentAreaName || profile?.areaName || "Lagos, Nigeria"}
-                </span>
-                <ChevronDown className="w-3 h-3 text-charcoal-muted" />
-              </button>
+              {/* Area location indicator pill (Mobile & Desktop) */}
+              {onOpenAreaPicker && (
+                <button
+                  onClick={onOpenAreaPicker}
+                  type="button"
+                  className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-parchment-soft hover:bg-parchment-deep border border-hairline text-xs text-charcoal font-medium transition-all"
+                  title="Change discovery location"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-forest flex-shrink-0" />
+                  <span className="max-w-[80px] xs:max-w-[110px] sm:max-w-[160px] truncate text-[11px] sm:text-xs">
+                    {currentAreaName || profile?.areaName || "Lagos, NG"}
+                  </span>
+                  <ChevronDown className="w-3 h-3 text-charcoal-muted flex-shrink-0" />
+                </button>
+              )}
             </div>
 
             {/* Right action items */}

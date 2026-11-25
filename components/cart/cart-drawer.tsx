@@ -159,7 +159,7 @@ export function CartDrawer() {
 
         {/* Footer with Checkout CTA */}
         {items.length > 0 && (
-          <div className="p-4 sm:p-5 border-t border-hairline bg-parchment/95 space-y-3">
+          <div className="p-4 sm:p-5 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t border-hairline bg-parchment/95 space-y-3">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-charcoal-muted">{t.total} ({items.length} items)</p>

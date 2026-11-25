@@ -16,8 +16,13 @@ export function BottomNav() {
   const isOrders = pathname.startsWith("/orders");
   const isSeller = pathname.startsWith("/seller");
 
+  // On produce detail pages, hide BottomNav so it doesn't conflict with product action bar
+  if (pathname.startsWith("/listings/")) {
+    return null;
+  }
+
   return (
-    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-parchment/95 backdrop-blur-md border-t border-hairline py-1.5 px-3">
+    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-parchment/95 backdrop-blur-md border-t border-hairline pt-1.5 pb-[calc(0.375rem+env(safe-area-inset-bottom))] px-3 shadow-dropdown">
       <div className="flex items-center justify-around">
         {/* Marketplace */}
         <Link

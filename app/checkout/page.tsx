@@ -233,7 +233,7 @@ export default function CheckoutPage() {
                     onChange={(e) => setDeliveryAddress(e.target.value)}
                     placeholder="e.g. 14 Adeola Odeku St, near Zenith Bank, Victoria Island"
                     required
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-sm text-charcoal focus:border-forest outline-none transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
                   />
                 </div>
 
@@ -248,7 +248,7 @@ export default function CheckoutPage() {
                       onChange={(e) => setBuyerName(e.target.value)}
                       placeholder="e.g. Tunde Bakare"
                       required
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-sm text-charcoal focus:border-forest outline-none transition-all"
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
                     />
                   </div>
 
@@ -262,9 +262,9 @@ export default function CheckoutPage() {
                         type="tel"
                         value={buyerPhone}
                         onChange={(e) => setBuyerPhone(e.target.value)}
-                        placeholder="+2348012345678"
+                        placeholder="08012345678"
                         required
-                        className="w-full pl-9 pr-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-sm text-charcoal focus:border-forest outline-none transition-all"
+                        className="w-full pl-9 pr-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
                       />
                     </div>
                   </div>
@@ -279,7 +279,7 @@ export default function CheckoutPage() {
                     value={buyerNote}
                     onChange={(e) => setBuyerNote(e.target.value)}
                     placeholder="e.g. Call my gate security on arrival, please handle eggs with care"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-sm text-charcoal focus:border-forest outline-none transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-hairline bg-parchment-soft/50 text-base sm:text-sm text-charcoal focus:border-forest outline-none transition-all"
                   />
                 </div>
               </div>

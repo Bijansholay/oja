@@ -203,7 +203,7 @@ export function ListingFeed({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t.searchPlaceholder}
-          className="w-full pl-12 pr-4 py-3 rounded-xl border border-hairline bg-white text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all shadow-subtle"
+          className="w-full pl-12 pr-4 py-3 rounded-xl border border-hairline bg-white text-base sm:text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all shadow-subtle"
         />
         {searchQuery && (
           <button
@@ -215,8 +215,8 @@ export function ListingFeed({
         )}
       </div>
 
-      {/* Category Filter Chips (horizontal scroll) */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+      {/* Category Filter Chips (horizontal edge-to-edge scroll on mobile) */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
         {CATEGORY_CHIPS.map((cat) => {
           const isSelected = selectedCategory === cat.id;
           return (

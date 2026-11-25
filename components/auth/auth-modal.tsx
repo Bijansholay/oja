@@ -96,7 +96,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/50 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-md bg-parchment rounded-xl border border-hairline shadow-dropdown p-6 sm:p-8 overflow-hidden">
+      <div className="relative w-full max-w-md max-h-[92vh] overflow-y-auto bg-parchment rounded-2xl border border-hairline shadow-dropdown p-5 sm:p-8">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -223,7 +223,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
                         placeholder="you@example.com"
                         required
                         autoFocus
-                        className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
+                        className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
                       />
                     </div>
                     <span className="text-[11px] text-charcoal-muted mt-1 block">
@@ -244,7 +244,7 @@ export function AuthModal({ isOpen, onClose, defaultRole = "buyer" }: AuthModalP
                         placeholder="08012345678 or +234..."
                         required
                         autoFocus
-                        className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
+                        className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-hairline bg-white text-base sm:text-sm text-charcoal placeholder:text-charcoal-subtle focus:border-forest focus:ring-1 focus:ring-forest outline-none transition-all"
                       />
                     </div>
                     <span className="text-[11px] text-charcoal-muted mt-1 block">
